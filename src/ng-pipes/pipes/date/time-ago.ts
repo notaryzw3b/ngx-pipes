@@ -4,12 +4,12 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class TimeAgoPipe implements PipeTransform {
   private static YEAR_MS: number = 1000 * 60 * 60 * 24 * 7 * 4 * 12;
   private static MAPPER: any = [
-    { single: 'last year', many: 'years', div: 1 },
-    { single: 'last month', many: 'months', div: 12 },
-    { single: 'last week', many: 'weeks', div: 4 },
-    { single: 'yesterday', many: 'days', div: 7 },
-    { single: 'an hour ago', many: 'hours', div: 24 },
-    { single: 'just now', many: 'minutes', div: 60 },
+    { single: 'l\'année dernière', many: 'years', div: 1 },
+    { single: 'le mois dernier', many: 'months', div: 12 },
+    { single: 'la semaine dernière', many: 'weeks', div: 4 },
+    { single: 'hier', many: 'days', div: 7 },
+    { single: 'il y a une heure', many: 'hours', div: 24 },
+    { single: 'maintenant', many: 'minutes', div: 60 },
   ];
 
   /**
@@ -25,7 +25,7 @@ export class TimeAgoPipe implements PipeTransform {
     const now = +new Date();
 
     if (past > now) {
-      return 'in the future';
+      return 'dans le futur';
     }
 
     for (let i = 0, l = TimeAgoPipe.MAPPER.length, ms = now - past, div = TimeAgoPipe.YEAR_MS; i < l; ++i) {
@@ -33,10 +33,10 @@ export class TimeAgoPipe implements PipeTransform {
       const unit = Math.floor(ms / (div /= elm.div));
 
       if (unit >= 1) {
-        return unit === 1 ? elm.single : `${unit} ${elm.many} ago`;
+        return unit === 1 ? elm.single : `${unit} ${elm.many}`;
       }
     }
 
-    return 'just now';
+    return 'maintenant';
   }
 }
